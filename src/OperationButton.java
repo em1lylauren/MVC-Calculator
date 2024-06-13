@@ -35,10 +35,10 @@ public class OperationButton {
             case "ADD":
                 return a + b;
 
-            case "SUBTRACT":
+            case "SUB":
                 return a - b;
 
-            case "MULTIPLY":
+            case "MUL":
                 return a * b;
 
             //Should never reach this line
@@ -59,13 +59,13 @@ public class OperationButton {
             case "ADD":
                 return a + b;
 
-            case "SUBTRACT":
+            case "SUB":
                 return a - b;
 
-            case "MULTIPLY":
+            case "MUL":
                 return a * b;
 
-            case "DIVIDE":
+            case "DIV":
                 if (b == 0) throw new ArithmeticException("Divide by zero.");
                 else return a / b;
 
