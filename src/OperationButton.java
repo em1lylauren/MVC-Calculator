@@ -9,7 +9,7 @@ public class OperationButton {
 
     /**
      * Creates a new instance of an operation button.
-     * @param opType
+     * @param opType the type of the operation
      */
     public OperationButton(String opType) {
         this.opType = opType;
