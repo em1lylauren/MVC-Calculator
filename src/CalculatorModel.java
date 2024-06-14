@@ -10,6 +10,10 @@ public class CalculatorModel {
      * The second number and second operand for any operation.
      */
     private Number nextNumber;
+    /**
+     * The current operation selected.
+     */
+    private String operation;
 
     /**
      * An array of operations in the calculator.
@@ -31,7 +35,10 @@ public class CalculatorModel {
      * Creates a new instance of the Calculator model.
      */
     public CalculatorModel() {
-        currentNumber = 0;
-        nextNumber = 0;
+        this.currentNumber = 0;
+        this.nextNumber = 0;
+        this.operation = "NONE";
     }
+
+
 }
