@@ -1,4 +1,9 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * A class that represents the view part of the MVC calculator.
@@ -36,17 +41,72 @@ public class CalculatorView extends JFrame {
 
         resultOperatorScrollPane = new JScrollPane(resultArea);
 
-        digitButtons = new JButton[]{new JButton("0"), new JButton("1"), new JButton("2"),
+        digitButtons = new JButton[]{new JButton("      0"), new JButton("1"), new JButton("2"),
                                      new JButton("3"), new JButton("4"), new JButton("5"),
                                      new JButton("6"), new JButton("7"), new JButton("8"),
                                      new JButton("9")};
 
-        operatorButtons = new JButton[]{new JButton("+"), new JButton("-"), new JButton("*"),
-                                        new JButton("/")};
+        operatorButtons = new JButton[]{new JButton("+"), new JButton("-"), new JButton("×"),
+                                        new JButton("÷")};
 
         //Clear, sign, percent, dot, equals buttons
         miscButtons = new JButton[]{new JButton("C"), new JButton("+/-"), new JButton("%"),
                                     new JButton("."), new JButton("=")};
+
+        //Fonts and colour changes
+        Font textFont = new Font("Roboto", Font.PLAIN, 20);
+        Color textColorPrimary = new Color(255, 255, 255);
+        Color textColorSecondary = new Color(0, 0, 0);
+
+        Color bgColor = new Color(0, 0, 0);
+        Color textAreaColor = new Color(255, 255, 255);
+
+        Color digitColor = new Color(60, 60, 60);
+        Color digitColorHover = new Color(89, 89, 89);
+
+        Color operationColor = new Color(200, 95, 38);
+        Color operationColorHover = new Color(228, 125, 72);
+
+        Color miscColor = new Color(172, 172, 172);
+        Color miscColorHover = new Color(209, 209, 209);
+
+        getContentPane().setBackground(bgColor);
+
+        resultArea.setFont(textFont);
+        resultArea.setBackground(textAreaColor);
+        resultArea.setForeground(textColorSecondary);
+        resultOperatorScrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+        operatorArea.setFont(textFont);
+        operatorArea.setBackground(textAreaColor);
+        operatorArea.setForeground(textColorSecondary);
+        operatorArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        for (JButton button : digitButtons) {
+            button.setFont(textFont);
+            button.setBackground(digitColor);
+            button.setForeground(textColorPrimary);
+            button.setBorder(null);
+        }
+        digitButtons[0].setHorizontalAlignment(SwingConstants.LEFT); //Special tweaks for alignment of 0 text
+
+        for (JButton button : operatorButtons) {
+            button.setFont(textFont);
+            button.setBackground(operationColor);
+            button.setForeground(textColorPrimary);
+            button.setBorder(null);
+        }
+
+        for (JButton button : miscButtons) {
+            button.setFont(textFont);
+            button.setBackground(miscColor);
+            button.setForeground(textColorSecondary);
+            button.setBorder(null);
+        }
+
+        //Special tweaks for the decimal and equals buttons
+        miscButtons[3].setBackground(digitColor); miscButtons[3].setForeground(textColorPrimary);
+        miscButtons[4].setBackground(operationColor); miscButtons[4].setForeground(textColorPrimary);
 
         setLocationByPlatform(true);
         setResizable(false);
@@ -64,7 +124,6 @@ public class CalculatorView extends JFrame {
         int verticalSize = 60;
         int horizontalSize = 80;
         int gapSize = 15;
-        int smallGapSize = gapSize / 2;
 
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -149,7 +208,7 @@ public class CalculatorView extends JFrame {
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                         .addComponent(resultOperatorScrollPane)
                                         .addComponent(operatorArea, GroupLayout.PREFERRED_SIZE, verticalSize, GroupLayout.PREFERRED_SIZE))
-                                .addGap(smallGapSize)
+                                .addGap(gapSize)
 
                                 //Clear button, sign button, percent button and division button
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -188,7 +247,7 @@ public class CalculatorView extends JFrame {
                                         .addComponent(digitButtons[0], GroupLayout.PREFERRED_SIZE, verticalSize, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(miscButtons[3], GroupLayout.PREFERRED_SIZE, verticalSize, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(miscButtons[4], GroupLayout.PREFERRED_SIZE, verticalSize, GroupLayout.PREFERRED_SIZE))
-                                .addGap(smallGapSize)));
+                                .addGap(gapSize)));
 
         pack();
     }
