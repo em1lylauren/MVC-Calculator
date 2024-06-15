@@ -21,7 +21,7 @@ public class CalculatorController  {
         this.view = view;
 
         //Adding ActionListeners to the buttons
-        for (int i = 0; i<9; i++) {
+        for (int i = 0; i<10; i++) {
             int digit = i;
             view.getDigitButton(i).addActionListener(_ -> digitButtonClicked(digit));
         }
