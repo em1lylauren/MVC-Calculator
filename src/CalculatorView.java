@@ -135,11 +135,13 @@ public class CalculatorView extends JFrame {
 
         resultArea.setFont(textFont);
         resultArea.setBackground(textAreaColor);
+        resultArea.setCaretColor(textAreaColor);
         resultArea.setForeground(textColorSecondary);
         resultOperatorScrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         operatorArea.setFont(textFont);
         operatorArea.setBackground(textAreaColor);
+        operatorArea.setCaretColor(textAreaColor);
         operatorArea.setForeground(textColorSecondary);
         operatorArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
