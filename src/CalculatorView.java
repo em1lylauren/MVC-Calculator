@@ -316,8 +316,4 @@ public class CalculatorView extends JFrame {
 
         pack();
     }
-
-    public static void main(String[] args) {
-        CalculatorView view = new CalculatorView(); //Remove when connected to controller
-    }
 }

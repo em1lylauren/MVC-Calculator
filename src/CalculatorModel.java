@@ -93,6 +93,4 @@ public class CalculatorModel {
     public void setOperationField(String operationField) {
         this.operationField = operationField;
     }
-
-
 }
