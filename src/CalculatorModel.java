@@ -3,6 +3,10 @@
  */
 public class CalculatorModel {
     /**
+     * The max length of the string in the result text area.
+     */
+    private final int maxDigits = 22;
+    /**
      * Text representing the current number in the result text area.
      */
     private String currentResultField;
@@ -34,14 +38,16 @@ public class CalculatorModel {
      * @param n the digit to replace/concatenate onto the existing number
      */
     public void changeResultField(int n) {
-        //Case: digit replaces existing text OR number in result field is already 0
-        if (isFirst || getCurrentResultField().equals("0")) {
-            setCurrentResultField(String.valueOf(n));
-            this.isFirst = false;
+        //Only allow addition of more digits if it's under the max limit
+        if (getCurrentResultField().length() < maxDigits) {
+            //Case: digit replaces existing text OR number in result field is already 0
+            if (isFirst || getCurrentResultField().equals("0")) {
+                setCurrentResultField(String.valueOf(n));
+                this.isFirst = false;
 
-        } else { //Case: digit is concatenated after existing text
-
-            setCurrentResultField(prevResultField + n);
+            } else { //Case: digit is concatenated after existing text
+                setCurrentResultField(getCurrentResultField() + n);
+            }
         }
     }
 
