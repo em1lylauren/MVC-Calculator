@@ -1,9 +1,5 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * A class that represents the view part of the MVC calculator.
@@ -21,17 +17,82 @@ public class CalculatorView extends JFrame {
      * An array of JButtons not considered operations or digits
      */
     private JButton[] miscButtons;
-
+    /**
+     * Holds the result text.
+     */
     private JTextField resultArea;
+    /**
+     * Holds the operator text.
+     */
     private JTextField operatorArea;
+    /**
+     * Holds the result area text field (for overflow).
+     */
     private JScrollPane resultOperatorScrollPane;
 
+    /**
+     * Returns the instance of a specified digit button.
+     * @param digit the digit button index (corresponds to the actual digit itself)
+     * @return the specified digit button.
+     */
+    public JButton getDigitButton(int digit) {
+        return digitButtons[digit];
+    }
+
+    /**
+     * Returns the instance of the operator text field.
+     * @return the operator text field
+     */
+    public JTextField getOperatorArea() {
+        return operatorArea;
+    }
+
+    /**
+     * Returns the instance of the result text field.
+     * @return the result text field
+     */
+    public JTextField getResultArea() {
+        return resultArea;
+    }
+
+    /**
+     * Returns instance of the result scroll pane.
+     * @return the result scroll pane
+     */
+    public JScrollPane getResultOperatorScrollPane() {
+        return resultOperatorScrollPane;
+    }
+
+    /**
+     * Returns the instance of a specified operator button.
+     * @param operator the operator button index
+     * @return the specified operator button.
+     */
+    public JButton getOperatorButton(int operator) {
+        return operatorButtons[operator];
+    }
+
+    /**
+     * Returns the instance of a specified miscellaneous button (not digit nor operator)
+     * @param misc the misc button index
+     * @return the specified misc button.
+     */
+    public JButton getMiscButton(int misc) {
+        return miscButtons[misc];
+    }
+
+    /**
+     * Initializes the calculator GUI and makes it visible to the user.
+     */
     public CalculatorView(){
         createUIComponents();
         organizeUIComponents();
         setVisible(true);
     }
 
+    /**
+     * Initializes all the JComponents and alters the colour/font scheme.
+     */
     private void createUIComponents() {
         resultArea = new JTextField();
         resultArea.setEditable(false);
@@ -116,10 +177,14 @@ public class CalculatorView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Organizes the layout of all GUI components.
+     */
     private void organizeUIComponents() {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
+        //Variables for spacing
         int scrollPaneSize = 270;
         int verticalSize = 60;
         int horizontalSize = 80;
@@ -253,6 +318,6 @@ public class CalculatorView extends JFrame {
     }
 
     public static void main(String[] args) {
-        CalculatorView view = new CalculatorView();
+        CalculatorView view = new CalculatorView(); //Remove when connected to controller
     }
 }
