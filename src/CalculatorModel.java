@@ -22,6 +22,10 @@ public class CalculatorModel {
      * A boolean value marking whether currentResultField is to be replaced with or concatenated with the next digit entered.
      */
     private boolean isFirst;
+    /**
+     * A boolean value marking whether or not the calculator is in ERROR mode.
+     */
+    boolean errorMode;
 
     /**
      * Creates a new instance of the Calculator model.
@@ -31,6 +35,7 @@ public class CalculatorModel {
         this.prevResultField = "";
         this.operationField = "";
         this.isFirst = true;
+        this.errorMode = false;
     }
 
     /**
@@ -38,15 +43,17 @@ public class CalculatorModel {
      * @param n the digit to replace/concatenate onto the existing number
      */
     public void changeResultField(int n) {
-        //Only allow addition of more digits if it's under the max limit
-        if (getCurrentResultField().length() < maxDigits) {
-            //Case: digit replaces existing text OR number in result field is already 0
-            if (isFirst || getCurrentResultField().equals("0")) {
-                setCurrentResultField(String.valueOf(n));
-                this.isFirst = false;
+        if (!this.errorMode) {
+            //Only allow addition of more digits if it's under the max limit
+            if (getCurrentResultField().length() < maxDigits) {
+                //Case: digit replaces existing text OR number in result field is already 0
+                if (isFirst || getCurrentResultField().equals("0")) {
+                    setCurrentResultField(String.valueOf(n));
+                    this.isFirst = false;
 
-            } else { //Case: digit is concatenated after existing text
-                setCurrentResultField(getCurrentResultField() + n);
+                } else { //Case: digit is concatenated after existing text
+                    setCurrentResultField(getCurrentResultField() + n);
+                }
             }
         }
     }
@@ -56,32 +63,41 @@ public class CalculatorModel {
      * @param operation the mathematical operation to be put in the operation text field
      */
     public void changeOperationField(String operation) {
-        //If user presses operator button again instead of equals button, perform operation anyway
-        calculate();
+        if (!this.errorMode) {
+            //If user presses operator button again instead of equals button, perform operation anyway
+            calculate();
 
-        //Hold the current value in another variable for later
-        setPrevResultField(getCurrentResultField());
+            //Hold the current value in another variable for later
+            setPrevResultField(getCurrentResultField());
 
-        setOperationField(operation);
-        this.isFirst = true; //In preparation for the second number, so the current one disappears from the display
+            setOperationField(operation);
+            this.isFirst = true; //In preparation for the second number, so the current one disappears from the display
+        }
     }
 
     /**
      * Performs the calculation.
      */
     public void calculate() {
-        //Make sure there is an operation to complete
-        if (!getOperationField().isEmpty()) {
+        //Make sure there is an operation to complete, and that the calculator isn't in error mode
+        if (!getOperationField().isEmpty() && !this.errorMode) {
             Double firstOperand = Double.parseDouble(getPrevResultField());
             Double secondOperand = Double.parseDouble(getCurrentResultField());
             char operation = getOperationField().charAt(0);
 
-            Double result = calculateResult(firstOperand, secondOperand, operation);
+            try {
+                Double result = calculateResult(firstOperand, secondOperand, operation);
+                setCurrentResultField(String.valueOf(result)); //Show new result
+                setOperationField("");
 
-            setCurrentResultField(String.valueOf(result)); //Show new result
-            setOperationField("");
+                this.isFirst = true; //To not add on to result
 
-            this.isFirst = true; //To not add on to result
+            //Go into ERROR mode if division by zero occurs (can only be removed by clearing)
+            } catch (ArithmeticException e) {
+                this.errorMode = true;
+                setCurrentResultField("ERROR");
+                setOperationField("");
+            }
         }
     }
 
@@ -124,15 +140,18 @@ public class CalculatorModel {
         //Add in rotating clear and all clear later?
         setCurrentResultField("0");
         setOperationField("");
+        this.errorMode = false;
     }
 
     /**
      * Adds a decimal point dot (.) to the text field. Does not add one if a dot already has been added.
      */
     public void addDecimalPoint() {
-        //If we are within the allowed digit length and it doesn't already have a dot
-        if (getCurrentResultField().length() < maxDigits &&! getCurrentResultField().contains(".")) {
-            setCurrentResultField(getCurrentResultField() + '.');
+        if (!this.errorMode) {
+            //If we are within the allowed digit length and it doesn't already have a dot
+            if (getCurrentResultField().length() < maxDigits && !getCurrentResultField().contains(".")) {
+                setCurrentResultField(getCurrentResultField() + '.');
+            }
         }
     }
 
@@ -140,30 +159,34 @@ public class CalculatorModel {
      * Changes the result to a percentage of 100.
      */
     public void changeToPercent() {
-        //If it equals 0, it's still 0
-        if (getCurrentResultField().equals("0")) {
-            setCurrentResultField("0");
+        if (!this.errorMode) {
+            //If it equals 0, it's still 0
+            if (getCurrentResultField().equals("0")) {
+                setCurrentResultField("0");
 
-        } else {
-            Double newResult = Double.parseDouble(getCurrentResultField()) / 100;
-            setCurrentResultField(String.valueOf(newResult));
+            } else {
+                Double newResult = Double.parseDouble(getCurrentResultField()) / 100;
+                setCurrentResultField(String.valueOf(newResult));
+            }
+
+            //Mimic the behaviour of the iPhone calculator
+            this.isFirst = true;
         }
-
-        //Mimic the behaviour of the iPhone calculator
-        this.isFirst = true;
     }
 
     /**
      * Changes the sign of the number in the result field.
      */
     public void changeSign() {
-        //If the number is positive add a - sign
-        if (!getCurrentResultField().contains("-")) {
-            setCurrentResultField("-" + getCurrentResultField());
+        if (!this.errorMode) {
+            //If the number is positive add a - sign
+            if (!getCurrentResultField().contains("-")) {
+                setCurrentResultField("-" + getCurrentResultField());
 
-        //If the number is negative remove the - sign
-        } else {
-            setCurrentResultField(getCurrentResultField().substring(1));
+                //If the number is negative remove the - sign
+            } else {
+                setCurrentResultField(getCurrentResultField().substring(1));
+            }
         }
     }
 
