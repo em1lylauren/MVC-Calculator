@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 /**
  * The model of the calculator.
  */
@@ -32,7 +34,7 @@ public class CalculatorModel {
      */
     public CalculatorModel() {
         this.currentResultField = "0";
-        this.prevResultField = "";
+        this.prevResultField = "0";
         this.operationField = "";
         this.isFirst = true;
         this.errorMode = false;
@@ -79,24 +81,28 @@ public class CalculatorModel {
      * Performs the calculation.
      */
     public void calculate() {
-        //Make sure there is an operation to complete, and that the calculator isn't in error mode
-        if (!getOperationField().isEmpty() && !this.errorMode) {
+        //Does not allow calculations if in error mode
+        if (!this.errorMode) {
             Double firstOperand = Double.parseDouble(getPrevResultField());
             Double secondOperand = Double.parseDouble(getCurrentResultField());
-            char operation = getOperationField().charAt(0);
 
-            try {
-                Double result = calculateResult(firstOperand, secondOperand, operation);
-                setCurrentResultField(String.valueOf(result)); //Show new result
-                setOperationField("");
+            //Check first if there is an operation in the operation field (gets priority)
+            if (!getOperationField().isEmpty()) {
+                char operation = getOperationField().charAt(0);
 
-                this.isFirst = true; //To not add on to result
+                try {
+                    String result = calculateResult(firstOperand, secondOperand, operation);
+                    setCurrentResultField(result); //Show new result
+                    setOperationField("");
 
-            //Go into ERROR mode if division by zero occurs (can only be removed by clearing)
-            } catch (ArithmeticException e) {
-                this.errorMode = true;
-                setCurrentResultField("ERROR");
-                setOperationField("");
+                    this.isFirst = true; //To not add on to result
+
+                    //Go into ERROR mode if division by zero occurs (can only be removed by clearing)
+                } catch (ArithmeticException e) {
+                    this.errorMode = true;
+                    setCurrentResultField("ERROR");
+                    setOperationField("");
+                }
             }
         }
     }
@@ -109,28 +115,37 @@ public class CalculatorModel {
      * @return the result of the operation
      * @throws ArithmeticException when attempting to divide by zero
      */
-    public Double calculateResult(Double firstOperand, Double secondOperand, char operation) throws ArithmeticException {
+    public String calculateResult(Double firstOperand, Double secondOperand, char operation) throws ArithmeticException {
+        Double result;
+
         //Calculate based on given operand
         switch (operation) {
             case '+':
-                return firstOperand + secondOperand;
+                result = firstOperand + secondOperand;
+                break;
 
             case '-':
-                return firstOperand - secondOperand;
+                result = firstOperand - secondOperand;
+                break;
 
             case '×':
-                return firstOperand * secondOperand;
+                result = firstOperand * secondOperand;
+                break;
 
             case '÷':
                 if (secondOperand == 0) {
                     throw new ArithmeticException("Can't divide by zero.");
                 } else {
-                    return firstOperand / secondOperand;
+                    result = firstOperand / secondOperand;
+                    break;
                 }
 
             default:
                 throw new ArithmeticException("Invalid operation.");
         }
+
+        DecimalFormat format = new DecimalFormat("#.#####");
+        return format.format(result);
     }
 
     /**
