@@ -87,6 +87,20 @@ public class CalculatorModel {
     }
 
     /**
+     * Changes the sign of the number in the result field.
+     */
+    public void changeSign() {
+        //If the number is positive add a - sign
+        if (!getCurrentResultField().contains("-")) {
+            setCurrentResultField("-" + getCurrentResultField());
+
+        //If the number is negative remove the - sign
+        } else {
+            setCurrentResultField(getCurrentResultField().substring(1));
+        }
+    }
+
+    /**
      * Gets the current value of the result string.
      * @return the String representing the current number in the result text field
      */
