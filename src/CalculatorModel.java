@@ -51,6 +51,13 @@ public class CalculatorModel {
         }
     }
 
+    /**
+     * Clears the result text field.
+     */
+    public void clearResultField() {
+        //Add in rotating clear and all clear later?
+        setCurrentResultField("");
+    }
 
     /**
      * Gets the current value of the result string.

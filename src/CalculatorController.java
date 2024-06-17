@@ -26,6 +26,10 @@ public class CalculatorController  {
             view.getDigitButton(i).addActionListener(_ -> digitButtonClicked(digit));
         }
 
+        //Plus minus mul div
+        //Clear sign decimal dot equals
+        view.getMiscButton(0).addActionListener(_ -> );
+
         updateView();
     }
 
@@ -35,6 +39,14 @@ public class CalculatorController  {
      */
     public void digitButtonClicked(int digit) {
         model.changeResultField(digit);
+        updateView();
+    }
+
+    /**
+     * Updates the view when the clear button is clicked.
+     */
+    public void clearButtonClicked() {
+        model.clearResultField();
         updateView();
     }
 
