@@ -28,7 +28,7 @@ public class CalculatorController  {
 
         //Plus minus mul div
         //Clear sign decimal dot equals
-        view.getMiscButton(0).addActionListener(_ -> );
+        view.getMiscButton(0).addActionListener(_ -> clearButtonClicked());
 
         updateView();
     }
