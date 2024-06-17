@@ -95,9 +95,11 @@ public class CalculatorView extends JFrame {
      */
     private void createUIComponents() {
         resultArea = new JTextField();
+        resultArea.setHorizontalAlignment(SwingConstants.RIGHT); //Right-aligned text
         resultArea.setEditable(false);
 
         operatorArea = new JTextField();
+        operatorArea.setHorizontalAlignment(SwingConstants.RIGHT);
         operatorArea.setEditable(false);
 
         resultOperatorScrollPane = new JScrollPane(resultArea);

@@ -56,7 +56,17 @@ public class CalculatorModel {
      */
     public void clearResultField() {
         //Add in rotating clear and all clear later?
-        setCurrentResultField("");
+        setCurrentResultField("0");
+    }
+
+    /**
+     * Adds a decimal point dot (.) to the text field. Does not add one if a dot already has been added.
+     */
+    public void addDecimalPoint() {
+        //If we are within the allowed digit length and it doesn't already have a dot
+        if (getCurrentResultField().length() < maxDigits &&! getCurrentResultField().contains(".")) {
+            setCurrentResultField(getCurrentResultField() + '.');
+        }
     }
 
     /**

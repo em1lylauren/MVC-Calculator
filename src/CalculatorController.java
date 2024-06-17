@@ -27,8 +27,12 @@ public class CalculatorController  {
         }
 
         //Plus minus mul div
-        //Clear sign decimal dot equals
+
         view.getMiscButton(0).addActionListener(_ -> clearButtonClicked());
+        //view.getMiscButton(1).addActionListener(_ -> ); Sign
+        //view.getMiscButton(2).addActionListener(_ -> ); Percentage
+        view.getMiscButton(3).addActionListener(_ -> decimalButtonClicked());
+        //view.getMiscButton(4).addActionListener(_ -> ); Equals
 
         updateView();
     }
@@ -47,6 +51,14 @@ public class CalculatorController  {
      */
     public void clearButtonClicked() {
         model.clearResultField();
+        updateView();
+    }
+
+    /**
+     * Updates the view when the decimal button is clicked.
+     */
+    public void decimalButtonClicked() {
+        model.addDecimalPoint();
         updateView();
     }
 
