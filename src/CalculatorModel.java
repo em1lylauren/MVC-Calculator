@@ -56,6 +56,9 @@ public class CalculatorModel {
      * @param operation the mathematical operation to be put in the operation text field
      */
     public void changeOperationField(String operation) {
+        //If user presses operator button again instead of equals button, perform operation anyway
+        calculate();
+
         //Hold the current value in another variable for later
         setPrevResultField(getCurrentResultField());
 
@@ -69,9 +72,6 @@ public class CalculatorModel {
     public void calculate() {
         //Make sure there is an operation to complete
         if (!getOperationField().isEmpty()) {
-            System.out.println("First operand: " + getPrevResultField());
-            System.out.println("Second operand: " + getCurrentResultField());
-
             Double firstOperand = Double.parseDouble(getPrevResultField());
             Double secondOperand = Double.parseDouble(getCurrentResultField());
             char operation = getOperationField().charAt(0);
