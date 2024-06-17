@@ -30,7 +30,7 @@ public class CalculatorController  {
 
         view.getMiscButton(0).addActionListener(_ -> clearButtonClicked());
         //view.getMiscButton(1).addActionListener(_ -> ); Sign
-        //view.getMiscButton(2).addActionListener(_ -> ); Percentage
+        view.getMiscButton(2).addActionListener(_ -> percentageButtonClicked());
         view.getMiscButton(3).addActionListener(_ -> decimalButtonClicked());
         //view.getMiscButton(4).addActionListener(_ -> ); Equals
 
@@ -51,6 +51,14 @@ public class CalculatorController  {
      */
     public void clearButtonClicked() {
         model.clearResultField();
+        updateView();
+    }
+
+    /**
+     * Updates the view when the percent button is clicked.
+     */
+    public void percentageButtonClicked() {
+        model.changeToPercent();
         updateView();
     }
 

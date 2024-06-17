@@ -70,6 +70,23 @@ public class CalculatorModel {
     }
 
     /**
+     * Changes the result to a percentage of 100.
+     */
+    public void changeToPercent() {
+        //If it equals 0, it's still 0
+        if (getCurrentResultField().equals("0")) {
+            setCurrentResultField("0");
+
+        } else {
+            Double newResult = Double.parseDouble(getCurrentResultField()) / 100;
+            setCurrentResultField(String.valueOf(newResult));
+        }
+
+        //Mimic the behaviour of the iPhone calculator
+        this.isFirst = true;
+    }
+
+    /**
      * Gets the current value of the result string.
      * @return the String representing the current number in the result text field
      */
