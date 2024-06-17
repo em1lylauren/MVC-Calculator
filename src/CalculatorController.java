@@ -26,13 +26,16 @@ public class CalculatorController  {
             view.getDigitButton(i).addActionListener(_ -> digitButtonClicked(digit));
         }
 
-        //Plus minus mul div
+        for (int i = 0; i<4; i++) {
+            int operation = i;
+            view.getOperatorButton(operation).addActionListener(_ -> operationButtonClicked(view.getOperatorButton(operation).getText()));
+        }
 
         view.getMiscButton(0).addActionListener(_ -> clearButtonClicked());
         view.getMiscButton(1).addActionListener(_ -> signButtonClicked());
         view.getMiscButton(2).addActionListener(_ -> percentageButtonClicked());
         view.getMiscButton(3).addActionListener(_ -> decimalButtonClicked());
-        //view.getMiscButton(4).addActionListener(_ -> ); Equals
+        view.getMiscButton(4).addActionListener(_ -> equalsButtonClicked());
 
         updateView();
     }
@@ -43,6 +46,15 @@ public class CalculatorController  {
      */
     public void digitButtonClicked(int digit) {
         model.changeResultField(digit);
+        updateView();
+    }
+
+    /**
+     * Updates the view when any of the operator buttons are clicked.
+     * @param operation the operator
+     */
+    public void operationButtonClicked(String operation) {
+        model.changeOperationField(operation);
         updateView();
     }
 
@@ -75,6 +87,14 @@ public class CalculatorController  {
      */
     public void decimalButtonClicked() {
         model.addDecimalPoint();
+        updateView();
+    }
+
+    /**
+     * Updates the view when the equals button is clicked.
+     */
+    public void equalsButtonClicked() {
+        model.calculate();
         updateView();
     }
 

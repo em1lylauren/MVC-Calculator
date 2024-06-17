@@ -52,11 +52,78 @@ public class CalculatorModel {
     }
 
     /**
+     * Changes the operation displayed in the operation text field.
+     * @param operation the mathematical operation to be put in the operation text field
+     */
+    public void changeOperationField(String operation) {
+        //Hold the current value in another variable for later
+        setPrevResultField(getCurrentResultField());
+
+        setOperationField(operation);
+        this.isFirst = true; //In preparation for the second number, so the current one disappears from the display
+    }
+
+    /**
+     * Performs the calculation.
+     */
+    public void calculate() {
+        //Make sure there is an operation to complete
+        if (!getOperationField().isEmpty()) {
+            System.out.println("First operand: " + getPrevResultField());
+            System.out.println("Second operand: " + getCurrentResultField());
+
+            Double firstOperand = Double.parseDouble(getPrevResultField());
+            Double secondOperand = Double.parseDouble(getCurrentResultField());
+            char operation = getOperationField().charAt(0);
+
+            Double result = calculateResult(firstOperand, secondOperand, operation);
+
+            setCurrentResultField(String.valueOf(result)); //Show new result
+            setOperationField("");
+
+            this.isFirst = true; //To not add on to result
+        }
+    }
+
+    /**
+     * Performs the actual calculation of two numbers and an operator.
+     * @param firstOperand the first operand
+     * @param secondOperand the second operand
+     * @param operation the operation to be performed
+     * @return the result of the operation
+     * @throws ArithmeticException when attempting to divide by zero
+     */
+    public Double calculateResult(Double firstOperand, Double secondOperand, char operation) throws ArithmeticException {
+        //Calculate based on given operand
+        switch (operation) {
+            case '+':
+                return firstOperand + secondOperand;
+
+            case '-':
+                return firstOperand - secondOperand;
+
+            case '×':
+                return firstOperand * secondOperand;
+
+            case '÷':
+                if (secondOperand == 0) {
+                    throw new ArithmeticException("Can't divide by zero.");
+                } else {
+                    return firstOperand / secondOperand;
+                }
+
+            default:
+                throw new ArithmeticException("Invalid operation.");
+        }
+    }
+
+    /**
      * Clears the result text field.
      */
     public void clearResultField() {
         //Add in rotating clear and all clear later?
         setCurrentResultField("0");
+        setOperationField("");
     }
 
     /**
