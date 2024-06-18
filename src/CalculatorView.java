@@ -88,6 +88,7 @@ public class CalculatorView extends JFrame {
         createUIComponents();
         organizeUIComponents();
         setVisible(true);
+        setFocusable(true);
     }
 
     /**
@@ -152,6 +153,7 @@ public class CalculatorView extends JFrame {
             button.setBackground(digitColor);
             button.setForeground(textColorPrimary);
             button.setBorder(null);
+            button.setFocusable(false);
         }
         digitButtons[0].setHorizontalAlignment(SwingConstants.LEFT); //Special tweaks for alignment of 0 text
 
@@ -160,6 +162,7 @@ public class CalculatorView extends JFrame {
             button.setBackground(operationColor);
             button.setForeground(textColorPrimary);
             button.setBorder(null);
+            button.setFocusable(false);
         }
 
         for (JButton button : miscButtons) {
@@ -167,6 +170,7 @@ public class CalculatorView extends JFrame {
             button.setBackground(miscColor);
             button.setForeground(textColorSecondary);
             button.setBorder(null);
+            button.setFocusable(false);
         }
 
         //Special tweaks for the decimal and equals buttons
