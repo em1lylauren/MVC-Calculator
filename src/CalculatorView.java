@@ -1,5 +1,8 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * A class that represents the view part of the MVC calculator.
@@ -98,10 +101,12 @@ public class CalculatorView extends JFrame {
         resultArea = new JTextField();
         resultArea.setHorizontalAlignment(SwingConstants.RIGHT); //Right-aligned text
         resultArea.setEditable(false);
+        resultArea.setFocusable(false);
 
         operatorArea = new JTextField();
         operatorArea.setHorizontalAlignment(SwingConstants.CENTER);
         operatorArea.setEditable(false);
+        operatorArea.setFocusable(false);
 
         resultOperatorScrollPane = new JScrollPane(resultArea);
 
@@ -181,7 +186,12 @@ public class CalculatorView extends JFrame {
         setResizable(false);
 
         setTitle("Calculator");
-        setIconImage(null);
+        try {
+            setIconImage(ImageIO.read(new File("icon/calculator.png")));
+        } catch (IOException e) {
+            //Don't do anything if icon doesn't load
+        }
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 

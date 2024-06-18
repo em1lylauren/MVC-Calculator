@@ -193,7 +193,7 @@ public class CalculatorController implements KeyListener {
             case KeyEvent.VK_DELETE:
                 clearButtonClicked();
                 break;
-            case KeyEvent.VK_NUM_LOCK:
+            case KeyEvent.VK_SHIFT:
                 signButtonClicked();
                 break;
         }
