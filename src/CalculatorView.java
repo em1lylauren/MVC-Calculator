@@ -99,12 +99,12 @@ public class CalculatorView extends JFrame {
         resultArea.setEditable(false);
 
         operatorArea = new JTextField();
-        operatorArea.setHorizontalAlignment(SwingConstants.RIGHT);
+        operatorArea.setHorizontalAlignment(SwingConstants.CENTER);
         operatorArea.setEditable(false);
 
         resultOperatorScrollPane = new JScrollPane(resultArea);
 
-        digitButtons = new JButton[]{new JButton("      0"), new JButton("1"), new JButton("2"),
+        digitButtons = new JButton[]{new JButton("             0"), new JButton("1"), new JButton("2"),
                                      new JButton("3"), new JButton("4"), new JButton("5"),
                                      new JButton("6"), new JButton("7"), new JButton("8"),
                                      new JButton("9")};

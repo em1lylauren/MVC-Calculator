@@ -27,7 +27,7 @@ public class CalculatorModel {
     /**
      * A boolean value marking whether or not the calculator is in ERROR mode.
      */
-    boolean errorMode;
+    private boolean errorMode;
 
     /**
      * Creates a new instance of the Calculator model.
@@ -46,16 +46,14 @@ public class CalculatorModel {
      */
     public void changeResultField(int n) {
         if (!this.errorMode) {
-            //Only allow addition of more digits if it's under the max limit
-            if (getCurrentResultField().length() < maxDigits) {
-                //Case: digit replaces existing text OR number in result field is already 0
-                if (isFirst || getCurrentResultField().equals("0")) {
-                    setCurrentResultField(String.valueOf(n));
-                    this.isFirst = false;
+            //Case: digit replaces existing text OR number in result field is already 0
+            if (isFirst || getCurrentResultField().equals("0")) {
+                setCurrentResultField(String.valueOf(n));
+                this.isFirst = false;
 
-                } else { //Case: digit is concatenated after existing text
-                    setCurrentResultField(getCurrentResultField() + n);
-                }
+            //Case: digit is concatenated after existing text
+            } else if (getCurrentResultField().length() < maxDigits) { //Only allow addition of more digits if it's under the max limit
+                setCurrentResultField(getCurrentResultField() + n);
             }
         }
     }
@@ -83,8 +81,20 @@ public class CalculatorModel {
     public void calculate() {
         //Does not allow calculations if in error mode
         if (!this.errorMode) {
-            Double firstOperand = Double.parseDouble(getPrevResultField());
-            Double secondOperand = Double.parseDouble(getCurrentResultField());
+            Double firstOperand;
+            Double secondOperand;
+
+            try {
+                firstOperand = Double.parseDouble(getPrevResultField());
+                secondOperand = Double.parseDouble(getCurrentResultField());
+
+            //Account for overflow error if number reaches infinity
+            } catch (NumberFormatException e) {
+                this.errorMode = true;
+                setCurrentResultField("ERROR");
+                setOperationField("");
+                return;
+            }
 
             //Check first if there is an operation in the operation field (gets priority)
             if (!getOperationField().isEmpty()) {
@@ -92,12 +102,22 @@ public class CalculatorModel {
 
                 try {
                     String result = calculateResult(firstOperand, secondOperand, operation);
-                    setCurrentResultField(result); //Show new result
+
+                    //Show new result (truncated to max digits allowed)
+                    if (result.length() > this.maxDigits) {
+                        this.errorMode = true;
+                        setCurrentResultField("OVERFLOW ERROR");
+                        setOperationField("");
+                        return;
+
+                    } else {
+                        setCurrentResultField(result);
+                    }
+
                     setOperationField("");
+                    this.isFirst = true; //To not add on to result (user enters new number)
 
-                    this.isFirst = true; //To not add on to result
-
-                    //Go into ERROR mode if division by zero occurs (can only be removed by clearing)
+                //Go into ERROR mode if division by zero occurs (can only be removed by clearing)
                 } catch (ArithmeticException e) {
                     this.errorMode = true;
                     setCurrentResultField("ERROR");
@@ -154,6 +174,7 @@ public class CalculatorModel {
     public void clearResultField() {
         //Add in rotating clear and all clear later?
         setCurrentResultField("0");
+        setPrevResultField("0");
         setOperationField("");
         this.errorMode = false;
     }
@@ -195,7 +216,7 @@ public class CalculatorModel {
     public void changeSign() {
         if (!this.errorMode) {
             //If the number is positive add a - sign
-            if (!getCurrentResultField().contains("-")) {
+            if (getCurrentResultField().charAt(0) != '-') {
                 setCurrentResultField("-" + getCurrentResultField());
 
                 //If the number is negative remove the - sign
