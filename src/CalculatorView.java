@@ -123,7 +123,7 @@ public class CalculatorView extends JFrame {
                                              new CalculatorButton("."), new CalculatorButton("=")};
 
         //Fonts and colour changes
-        Font textFont = new Font("Roboto", Font.PLAIN, 20);
+        Font textFont = new Font("Microsoft JhengHei UI Light", Font.PLAIN, 21);
         Color textColorPrimary = new Color(255, 255, 255);
         Color textColorSecondary = new Color(0, 0, 0);
 
