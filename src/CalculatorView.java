@@ -11,15 +11,15 @@ public class CalculatorView extends JFrame {
     /**
      * An array of JButtons representing the digits 0-9.
      */
-    private JButton[] digitButtons;
+    private CalculatorButton[] digitButtons;
     /**
      * An array of JButtons representing operations.
      */
-    private JButton[] operatorButtons;
+    private CalculatorButton[] operatorButtons;
     /**
      * An array of JButtons not considered operations or digits
      */
-    private JButton[] miscButtons;
+    private CalculatorButton[] miscButtons;
     /**
      * Holds the result text.
      */
@@ -38,7 +38,7 @@ public class CalculatorView extends JFrame {
      * @param digit the digit button index (corresponds to the actual digit itself)
      * @return the specified digit button.
      */
-    public JButton getDigitButton(int digit) {
+    public CalculatorButton getDigitButton(int digit) {
         return digitButtons[digit];
     }
 
@@ -71,7 +71,7 @@ public class CalculatorView extends JFrame {
      * @param operator the operator button index
      * @return the specified operator button.
      */
-    public JButton getOperatorButton(int operator) {
+    public CalculatorButton getOperatorButton(int operator) {
         return operatorButtons[operator];
     }
 
@@ -80,7 +80,7 @@ public class CalculatorView extends JFrame {
      * @param misc the misc button index
      * @return the specified misc button.
      */
-    public JButton getMiscButton(int misc) {
+    public CalculatorButton getMiscButton(int misc) {
         return miscButtons[misc];
     }
 
@@ -110,17 +110,17 @@ public class CalculatorView extends JFrame {
 
         resultOperatorScrollPane = new JScrollPane(resultArea);
 
-        digitButtons = new JButton[]{new JButton("             0"), new JButton("1"), new JButton("2"),
-                                     new JButton("3"), new JButton("4"), new JButton("5"),
-                                     new JButton("6"), new JButton("7"), new JButton("8"),
-                                     new JButton("9")};
+        digitButtons = new CalculatorButton[]{new CalculatorButton("             0"), new CalculatorButton("1"), new CalculatorButton("2"),
+                                              new CalculatorButton("3"), new CalculatorButton("4"), new CalculatorButton("5"),
+                                              new CalculatorButton("6"), new CalculatorButton("7"), new CalculatorButton("8"),
+                                              new CalculatorButton("9")};
 
-        operatorButtons = new JButton[]{new JButton("+"), new JButton("-"), new JButton("×"),
-                                        new JButton("÷")};
+        operatorButtons = new CalculatorButton[]{new CalculatorButton("+"), new CalculatorButton("-"), new CalculatorButton("×"),
+                                                 new CalculatorButton("÷")};
 
         //Clear, sign, percent, dot, equals buttons
-        miscButtons = new JButton[]{new JButton("C"), new JButton("+/-"), new JButton("%"),
-                                    new JButton("."), new JButton("=")};
+        miscButtons = new CalculatorButton[]{new CalculatorButton("C"), new CalculatorButton("+/-"), new CalculatorButton("%"),
+                                             new CalculatorButton("."), new CalculatorButton("=")};
 
         //Fonts and colour changes
         Font textFont = new Font("Roboto", Font.PLAIN, 20);
@@ -131,13 +131,13 @@ public class CalculatorView extends JFrame {
         Color textAreaColor = new Color(255, 255, 255);
 
         Color digitColor = new Color(60, 60, 60);
-        Color digitColorHover = new Color(89, 89, 89);
+        Color digitColorClicked = new Color(89, 89, 89);
 
         Color operationColor = new Color(200, 95, 38);
-        Color operationColorHover = new Color(228, 125, 72);
+        Color operationColorClicked = new Color(228, 125, 72);
 
         Color miscColor = new Color(172, 172, 172);
-        Color miscColorHover = new Color(209, 209, 209);
+        Color miscColorClicked = new Color(209, 209, 209);
 
         getContentPane().setBackground(bgColor);
 
@@ -153,34 +153,37 @@ public class CalculatorView extends JFrame {
         operatorArea.setForeground(textColorSecondary);
         operatorArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        for (JButton button : digitButtons) {
+        for (CalculatorButton button : digitButtons) {
             button.setFont(textFont);
             button.setBackground(digitColor);
+            button.setBackgroundColorClicked(digitColorClicked);
             button.setForeground(textColorPrimary);
             button.setBorder(null);
             button.setFocusable(false);
         }
         digitButtons[0].setHorizontalAlignment(SwingConstants.LEFT); //Special tweaks for alignment of 0 text
 
-        for (JButton button : operatorButtons) {
+        for (CalculatorButton button : operatorButtons) {
             button.setFont(textFont);
             button.setBackground(operationColor);
+            button.setBackgroundColorClicked(operationColorClicked);
             button.setForeground(textColorPrimary);
             button.setBorder(null);
             button.setFocusable(false);
         }
 
-        for (JButton button : miscButtons) {
+        for (CalculatorButton button : miscButtons) {
             button.setFont(textFont);
             button.setBackground(miscColor);
+            button.setBackgroundColorClicked(miscColorClicked);
             button.setForeground(textColorSecondary);
             button.setBorder(null);
             button.setFocusable(false);
         }
 
         //Special tweaks for the decimal and equals buttons
-        miscButtons[3].setBackground(digitColor); miscButtons[3].setForeground(textColorPrimary);
-        miscButtons[4].setBackground(operationColor); miscButtons[4].setForeground(textColorPrimary);
+        miscButtons[3].setBackground(digitColor); miscButtons[3].setBackgroundColorClicked(digitColorClicked); miscButtons[3].setForeground(textColorPrimary);
+        miscButtons[4].setBackground(operationColor); miscButtons[4].setBackgroundColorClicked(operationColorClicked); miscButtons[4].setForeground(textColorPrimary);
 
         setLocationByPlatform(true);
         setResizable(false);
