@@ -1,8 +1,5 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * A class that represents the view part of the MVC calculator.
@@ -189,11 +186,7 @@ public class CalculatorView extends JFrame {
         setResizable(false);
 
         setTitle("Calculator");
-        try {
-            setIconImage(ImageIO.read(new File("icon/calculator.png")));
-        } catch (IOException e) {
-            //Don't do anything if icon doesn't load
-        }
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("calculator.png")));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
