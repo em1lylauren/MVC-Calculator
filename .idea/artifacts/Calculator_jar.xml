@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Calculator_jar</output-path>
     <root id="archive" name="Calculator.jar">
       <element id="module-output" name="Calculator" />
-      <element id="file-copy" path="$PROJECT_DIR$/icon/calculator.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/calculator.png" />
     </root>
   </artifact>
 </component>
