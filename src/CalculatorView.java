@@ -127,7 +127,7 @@ public class CalculatorView extends JFrame {
         Color textColorPrimary = new Color(255, 255, 255);
         Color textColorSecondary = new Color(0, 0, 0);
 
-        Color bgColor = new Color(0, 0, 0);
+        Color bgColor = new Color(21, 21, 21);
         Color textAreaColor = new Color(255, 255, 255);
 
         Color digitColor = new Color(60, 60, 60);
